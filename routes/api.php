@@ -25,3 +25,11 @@ Route::get('/test', function () {
         'message' => $message
     ]);
 });
+
+Route::get('/todo', function () {
+    $message = 'hello!api!';
+
+    return response()->json([
+        'message' => $message
+    ]);
+});
