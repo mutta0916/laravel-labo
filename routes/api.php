@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,10 +27,26 @@ Route::get('/test', function () {
     ]);
 });
 
-Route::get('/todo', function () {
-    $message = 'hello!api!';
+$data = array('test');
 
-    return response()->json([
-        'message' => $message
-    ]);
+Route::get('/todo', function () {
+    global $data;
+    $data[] = 'api取得できました！';
+    Log::info('初期表示処理');
+    Log::info(print_r($data, true));
+    return response()->json($data);
+});
+
+Route::post('/todo', function (Request $request) {
+
+    global $data;
+
+    Log::info('更新情報取得');
+    Log::info('-----取得データ-----');
+    Log::info($request->input('todo'));
+    Log::info('-----配列保持情報（追加前）-----');
+    Log::info(print_r($data, true));
+
+    // $this->data[] = $data->toArray();
+    // return response()->json($this->data);
 });
