@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TodoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,25 +29,6 @@ Route::get('/test', function () {
 });
 
 $data = array('test');
-
-Route::get('/todo', function () {
-    global $data;
-    $data[] = 'api取得できました！';
-    Log::info('初期表示処理');
-    Log::info(print_r($data, true));
-    return response()->json($data);
-});
-
-Route::post('/todo', function (Request $request) {
-
-    global $data;
-
-    Log::info('更新情報取得');
-    Log::info('-----取得データ-----');
-    Log::info($request->input('todo'));
-    Log::info('-----配列保持情報（追加前）-----');
-    Log::info(print_r($data, true));
-
-    // $this->data[] = $data->toArray();
-    // return response()->json($this->data);
-});
+Route::get('/todo', [TodoController::class, 'index']);
+Route::post('/todo', [TodoController::class, 'store']);
+Route::delete('/todo/{id}', [TodoController::class, 'destroy']);
